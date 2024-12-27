@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compound Investment Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f4f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .calculator {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            width: 400px;
+            text-align: center;
+        }
+        .calculator h1 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        .input-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #2d89ef;
+        }
+        button {
+            background-color: #2d89ef;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #1a6cd6;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <h1>Compound Investment Calculator</h1>
+        <div class="input-group">
+            <label for="investment">Initial Investment ($):</label>
+            <input type="number" id="investment" placeholder="Enter amount">
+        </div>
+        <div class="input-group">
+            <label for="months">Months to Compound:</label>
+            <input type="number" id="months" placeholder="Enter months (up to 120)">
+        </div>
+        <button onclick="calculate()">Calculate</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function calculate() {
+            const investment = parseFloat(document.getElementById('investment').value);
+            const months = parseInt(document.getElementById('months').value);
+
+            if (isNaN(investment) || isNaN(months) || months <= 0) {
+                document.getElementById('result').textContent = "Please enter valid inputs.";
+                return;
+            }
+
+            const weeks = months * 4; // Convert months to weeks
+            let total = investment;
+
+            for (let i = 0; i < weeks; i++) {
+                let weeklyProfit = total * 0.20; // 20% weekly profit
+                total += weeklyProfit * 0.75; // Deduct 25% profit fee
+            }
+
+            document.getElementById('result').textContent = `Total Amount after ${months} months: $${total.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>
